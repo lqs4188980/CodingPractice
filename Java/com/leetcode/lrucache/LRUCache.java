@@ -2,7 +2,15 @@ package com.leetcode.lrucache;
 
 import java.util.HashMap;
 
+/*
+ * The main idea of this implementation is using HashMap for fast accessing, 
+ * and using queue for tracking most recently unused cache.
+ * We create cache objects and add them into queue, also we map the cache's key to the reference of the cache objects.
+ */
 public class LRUCache {
+	/*
+	 * The implementation using self-defined link list as queue, which is two times faster than using LinkedList class as queue.
+	 */
 	int capacity;
     int count = 0;
     HashMap<Integer, ListNode> mMap;

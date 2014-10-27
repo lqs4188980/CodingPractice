@@ -23,6 +23,7 @@ public class PalindromePartitioningII {
         StringBuilder builder = new StringBuilder(s);
         
         for (int i = 2; i <= length; i++) {
+        	// minimum cut between 0 to i
             int minimum = Integer.MAX_VALUE;
             for (int j = i - 1; j>= 0; j--) {
                 if (isPalindrome(builder, j, i - 1, p)) {
@@ -33,6 +34,7 @@ public class PalindromePartitioningII {
                     }
                 }
             }
+            // Update table
             min[i - 1] = minimum;
             //System.out.println(minimum);
         }
@@ -43,7 +45,7 @@ public class PalindromePartitioningII {
     }
     
     private static boolean isPalindrome(StringBuilder s, int start, int end, int[][] table) {
-    	System.out.println(start + ", " + end);
+    	//System.out.println(start + ", " + end);
     	if (start > end) {
     		return false;
     	}

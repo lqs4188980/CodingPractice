@@ -6,46 +6,30 @@ public class InsertionSortList {
 		// TODO Auto-generated method stub
 
 	}
-	public ListNode insertionSortList(ListNode head) {
-        if(head == null || head.next == null){
+    public ListNode insertionSortList(ListNode head) {
+        if (head == null || head.next == null) {
             return head;
         }
         
-        // This will be the new list head
-        ListNode i = new ListNode(head.val);
+        ListNode newHead = new ListNode(-1),
+                ptNew = newHead,
+                pt = head,
+                temp = null;
         
-        ListNode current, pre;
-        while(head.next != null){
-            head = head.next;
-            current = i;
-            pre = i;
-            while(current.next != null && current.val <= head.val){
-                pre = current;
-                current = current.next;
-            }
+        while (pt != null) {
+            temp = pt;
+            pt = pt.next;
+            temp.next = null;
             
-            // On the head
-            if(pre == current){
-                if(current.val > head.val){
-                    ListNode node = new ListNode(head.val);
-                    node.next = i;
-                    i = node;
-                    continue;
-                }
+            while (ptNew.next != null && ptNew.next.val < temp.val) {
+                    ptNew = ptNew.next;
             }
-            if(current.next == null){
-                if(current.val <= head.val){
-                    ListNode node = new ListNode(head.val);
-                    current.next = node;
-                    continue;
-                }
-                
-            }
-            ListNode node = new ListNode(head.val);
-            pre.next = node;
-            node.next = current;
+            temp.next = ptNew.next;
+            ptNew.next = temp;
+            
+            ptNew = newHead;
         }
         
-        return i;
+        return newHead.next;
     }
 }
