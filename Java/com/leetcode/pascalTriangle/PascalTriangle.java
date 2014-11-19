@@ -2,6 +2,7 @@ package com.leetcode.pascalTriangle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PascalTriangle {
 
@@ -10,42 +11,35 @@ public class PascalTriangle {
 
 	}
 
-	public ArrayList<ArrayList<Integer>> generate(int numRows){
-		if(numRows == 0){
-			ArrayList<ArrayList<Integer>> triangle = new ArrayList<ArrayList<Integer>>();
-			return triangle;
+    public List<List<Integer>> generate(int numRows) {
+        ArrayList<ArrayList<Integer>> triangle = new ArrayList<ArrayList<Integer>>();
+        if(numRows == 0){
+			return (List)triangle;
 		}
-
-		if(numRows == 1){
-			ArrayList<Integer> top = new ArrayList<Integer>();
-			top.add(1);
-			ArrayList<ArrayList<Integer>> triangle = new ArrayList<ArrayList<Integer>>();
-			triangle.add(top);
-			return triangle;
+		ArrayList<Integer> level1 = new ArrayList<Integer>();
+		level1.add(1);
+		triangle.add(level1);
+        if(numRows == 1){
+			return (List)triangle;
 		}
-
-		ArrayList<ArrayList<Integer>> triangle = generate(numRows - 1);
-		ArrayList<Integer> currentLevel = new ArrayList<Integer>();
-		currentLevel.add(1);
-		ArrayList<Integer> upperLevel = triangle.get(numRows - 2);
 		
-		if(upperLevel.size() == 1){
-			currentLevel.add(1);
-			triangle.add(currentLevel);
-			return triangle;
-		}
+		ArrayList<Integer> prevLevel = new ArrayList<Integer>();
+		prevLevel.add(1);
+		prevLevel.add(1);
+		triangle.add(prevLevel);
+		int size = 0;
 
-		Iterator<Integer> itrt = upperLevel.iterator();
-		int current = itrt.next();
-		int next = 0;
-		do{
-			next = itrt.next();
-			currentLevel.add(current + next);
-			current = next;
-		}while(itrt.hasNext());
-		currentLevel.add(1);
-		triangle.add(currentLevel);
-		return triangle;
-
-	}
+        for (int i = 2; i < numRows; ++i) {
+            ArrayList<Integer> nextLevel = new ArrayList<Integer>();
+            nextLevel.add(1);
+            size = i;
+            for (int j = 0; j < size - 1; ++j) {
+                nextLevel.add(prevLevel.get(j) + prevLevel.get(j + 1));
+            }
+            nextLevel.add(1);
+            triangle.add(nextLevel);
+            prevLevel = nextLevel;
+        }
+        return (List)triangle;
+    }
 }

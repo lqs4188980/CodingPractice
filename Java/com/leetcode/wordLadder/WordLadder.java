@@ -33,34 +33,34 @@ public class WordLadder {
         
         LinkedList<String> queue = new LinkedList<String>();
         queue.add(start);
-        System.out.println("Add " + start);
         queue.add("");
-        System.out.println("Add \"\"");
         qLen += 2;
         
         
         while (qLen != 0) {
             String curr = queue.poll();
-            System.out.println("Current word is " + curr);
             --qLen;
-            System.out.println("The queue length is " + qLen);
             if (!curr.equals("")) {
-                if (curr.equals(end)) {
-                    return step + 1;
-                }
                 
                 if (dict.size() > 0) {
-                	System.out.println("Dict size is not zero");
                     
                     for (int i = 0; i < wLen; i++) {
-                    	char[] word = curr.toCharArray();
+                        char[] word = curr.toCharArray();
                         for (char c = 'a'; c <= 'z'; c++) {
                             word[i] = c;
                             String branch = new String(word);
-                            
+                            if (branch.equals(end)) {
+                                if (dict.contains(end)) {
+                                    return step + 2;
+                                }
+                                else {
+                                    return step + 1;
+                                    
+                                }
+                                
+                            }
                             if (dict.contains(branch)) {
                                 queue.add(branch);
-                                System.out.println("Add " + branch);
                                 ++qLen;
                                 dict.remove(branch);
                             }
@@ -71,9 +71,7 @@ public class WordLadder {
             } else if (qLen > 0){
                 ++step;
                 queue.add("");
-                System.out.println("Add \"\"");
                 ++qLen;
-                System.out.println("The queue length is " + qLen);
             }
         }
         
