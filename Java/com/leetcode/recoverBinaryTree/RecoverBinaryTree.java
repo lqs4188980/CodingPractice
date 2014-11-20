@@ -70,5 +70,37 @@ public class RecoverBinaryTree {
             realMin = getMin(root.right, realMin);
         return realMin;
     }
+    
+    /*
+     *     public void recoverTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        
+        ArrayList<TreeNode> nodeList = new ArrayList<TreeNode>();
+        ArrayList<Integer> valList = new ArrayList<Integer>();
+        
+        inorderTraversal(root, nodeList, valList);
+        int length = valList.size();
+        
+        Collections.sort(valList);
+        
+        for (int i = 0; i < length; ++i) {
+            nodeList.get(i).val = valList.get(i);
+        }
+        
+    }
+    
+    private void inorderTraversal(TreeNode root, ArrayList<TreeNode> nodeList, ArrayList<Integer> valList) {
+        if (root == null) {
+            return;
+        }
+        
+        inorderTraversal(root.left, nodeList, valList);
+        nodeList.add(root);
+        valList.add(root.val);
+        inorderTraversal(root.right, nodeList, valList);
+    }
+     */
 
 }
