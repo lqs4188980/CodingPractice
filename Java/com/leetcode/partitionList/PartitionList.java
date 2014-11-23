@@ -4,18 +4,43 @@ import com.leetcode.dataStructures.ListNode;
 
 public class PartitionList {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ListNode head = new ListNode(2);
-		head.next = new ListNode(1);
-		ListNode rv = partition(head, 2);
-		while (rv != null) {
-			System.out.println(rv.val);
-			rv = rv.next;
-		}
 
-	}
 	
+    public ListNode partition(ListNode head, int x) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode pt = head;
+        ListNode prev = dummy;
+        ListNode breakPoint = null;
+        
+        dummy.next = head;
+        while (pt != null) {
+            if (pt.val < x) {
+                prev = pt;
+                pt = pt.next;
+            } else {
+                breakPoint = prev;
+                while (pt != null && pt.val >= x) {
+                    prev = pt;
+                    pt = pt.next;
+                }
+                
+                if (pt != null) {
+                    prev.next = pt.next;
+                    pt.next = breakPoint.next;
+                    breakPoint.next = pt;
+                } else {
+                    return dummy.next;
+                }
+            }
+        }
+        
+        return dummy.next;
+    }
+	/*
     public static ListNode partition(ListNode head, int x) {
         if (head == null || head.next == null) {
             return head;
@@ -41,5 +66,5 @@ public class PartitionList {
         
         return lessHead;
     }
-
+*/
 }

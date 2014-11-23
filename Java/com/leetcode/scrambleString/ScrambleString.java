@@ -11,14 +11,14 @@ public class ScrambleString {
 	}
 	
     public boolean isScramble(String s1, String s2) {
-    	System.out.println("s1: " + s1 + ", s2: " + s2);
+    	
         if (s1 == null || s2 == null || s1.length() != s2.length()) {
-        	System.out.println("#1");
+        	
             return false;
         }
         
         if (s1.equals(s2)) {
-        	System.out.println("#2");
+        	
             return true;
         }
         
@@ -31,7 +31,7 @@ public class ScrambleString {
         String sig2 = new String(s2Chars);
         
         if (!sig1.equals(sig2)) {
-        	System.out.println("#3");
+        	
             return false;
         }
         int len = s1.length();
@@ -40,11 +40,11 @@ public class ScrambleString {
             String s12 = s1.substring(i);
             if ((isScramble(s11, s2.substring(0, i)) && isScramble(s12, s2.substring(i))) 
             || (isScramble(s11, s2.substring(len - i)) && isScramble(s12, s2.substring(0, len - i)))) {
-            	System.out.println("#4");
+            	
                 return true;
             } 
         }
-        System.out.println("#5");
+        
         return false;
     }
 

@@ -20,5 +20,30 @@ public class InorderTraversal {
 		return traverseResult;
     }
 	
+	/*
+	 *     public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> traversal = new ArrayList<Integer>();
+        
+        if (root == null) {
+            return traversal;
+        }
+        
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        TreeNode n = root;
+        
+        while (stack.size() != 0 || n != null) {
+            if (n != null) {
+                stack.push(n);
+                n = n.left;
+            } else {
+                n = stack.pop();
+                traversal.add(n.val);
+                n = n.right;
+            }
+        }
+        
+        return traversal;
+    }
+	 */
 
 }
