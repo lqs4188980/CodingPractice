@@ -4,16 +4,33 @@ import java.util.ArrayList;
 
 public class Subsets {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int[] S = {0};
-		for(ArrayList<Integer> subset : subsets(S)){
-			for(Integer item : subset){
-				System.out.println(item);
-			}
-			System.out.println('\n');
-		}
-	}
+/*
+ * Iterative Version
+ *     public List<List<Integer>> subsets(int[] S) {
+        ArrayList<ArrayList<Integer>> allSubsets = new ArrayList<ArrayList<Integer>>();
+        if(S == null){
+     		ArrayList<Integer> empty = new ArrayList<Integer>();
+     		allSubsets.add(empty);
+     		return (List)allSubsets;
+     	}
+        
+        Arrays.sort(S);
+        allSubsets.add(new ArrayList<Integer>());
+        
+        ArrayList<ArrayList<Integer>> cacheSets = new ArrayList<ArrayList<Integer>>();
+     	for (int i = 0; i < S.length; ++i) {
+     	    for (ArrayList<Integer> subset : allSubsets) {
+    	        ArrayList<Integer> cloneSub = new ArrayList<Integer>();
+    	        cloneSub.addAll(subset);
+    	        cloneSub.add(S[i]);
+    	        cacheSets.add(cloneSub);
+    	    }
+    	    allSubsets.addAll(cacheSets);
+    	    cacheSets.clear();
+     	}
+     	return (List)allSubsets;
+    }
+ */
 	
 	public static ArrayList<ArrayList<Integer>> subsets(int[] S) {
      	if(S == null){
