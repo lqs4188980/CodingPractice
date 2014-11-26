@@ -2,13 +2,8 @@ package com.leetcode.setMatrixZeros;
 
 public class SetMatrixZeros {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int[][] matrix = {{0,0,0,5},{4,3,1,4},{0,1,1,4},{1,2,1,3},{0,0,1,1}};
-		setZeroes(matrix);
-	}
 	
-    public static void setZeroes(int[][] matrix) {
+    public void setZeroes(int[][] matrix) {
         if (matrix == null) {
             return;
         }
@@ -41,7 +36,6 @@ public class SetMatrixZeros {
         }
         
         for (int i = 1; i < rows; i++) {
-        	
             if (matrix[i][0] == 0) {
                 for (int column = 0; column < columns; column++) {
                     matrix[i][column] = 0;
@@ -67,17 +61,6 @@ public class SetMatrixZeros {
                 matrix[i][0] = 0;
             }
         }
-        display(matrix);
-    }
-    
-    private static void display(int[][] matrix) {
-    	for (int i = 0; i < matrix.length; i++) {
-    		System.out.println();
-    		for (int j = 0; j < matrix[0].length; j++) {
-    			System.out.print(matrix[i][j] + " ");
-    		}
-    	}
-    	System.out.println();
     }
 
 }
