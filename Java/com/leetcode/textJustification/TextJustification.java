@@ -15,7 +15,7 @@ public class TextJustification {
 
 	
 	public static List<String> fullJustify(String[] words, int L) {
-        ArrayList<String> text = new ArrayList<String>();
+ArrayList<String> text = new ArrayList<String>();
         
         if (words == null) {
             return (List)text;
@@ -37,7 +37,6 @@ public class TextJustification {
             
             
             if (chars == L) {
-            	System.out.println("chars == L, i = " + i);
                 builder.append(words[i - wordCounter + 1]);
                 for (int j = i - wordCounter + 2; j <= i; j++) {
                     builder.append(' ');
@@ -49,7 +48,6 @@ public class TextJustification {
                 wordCounter = 0;
             } 
             if (chars > L) {
-            	System.out.println("chars > L, i = " + i);
                 chars -= (1 + words[i].length());
                 i--;
                 wordCounter--;
@@ -63,20 +61,19 @@ public class TextJustification {
                 }
                 
                 builder.append(words[i - wordCounter + 1]);
-                
                 if (wordCounter <= 1) {
-                	for (int j = 0; j < avgSpace; j++) {
-                		builder.append(' ');
-                	}
-                }
-                
-                for (int j = 0; j < extSpace; j++) {
-                    builder.append(' ');
+                    for (int j = 0; j < avgSpace; j++) {
+                        builder.append(' ');
+                    }
                 }
                 
                 for (int j = i - wordCounter + 2; j <= i; j++) {
                     for (int k = 0; k < avgSpace; k++) {
                         builder.append(' ');
+                    }
+                    if (extSpace > 0) {
+                        builder.append(' ');
+                        extSpace--;
                     }
                     builder.append(words[j]);
                 }
@@ -98,30 +95,21 @@ public class TextJustification {
                 return (List)text;
             }
             
-            int avgSpace = L - chars;
-            int extSpace = 0;
-            if (wordCounter > 1) {
-                avgSpace = (L - chars + (wordCounter - 1)) / (wordCounter - 1);
-                extSpace = (L - chars + (wordCounter - 1)) % (wordCounter - 1);
+            for (int j = i - wordCounter; j < words.length; j++) {
+                if (j == i - wordCounter) {
+                    builder.append(words[j]);
+                    continue;
+                }
+                builder.append(' ');
+                builder.append(words[j]);
             }
             
-            builder.append(words[i - wordCounter]);
-            if (wordCounter <= 1) {
-            	for (int j = 0; j < avgSpace; j++) {
-                    builder.append(' ');
-                }
-            }
+            int extSpace = L - builder.length();
             for (int j = 0; j < extSpace; j++) {
                 builder.append(' ');
             }
-            
-            for (int j = i - wordCounter + 1; j < i; j++) {
-                for (int k = 0; k < avgSpace; k++) {
-                    builder.append(' ');
-                }
-                builder.append(words[j]);
-            }
             text.add(builder.toString());
+            
         }
         
         return (List)text;

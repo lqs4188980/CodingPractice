@@ -4,9 +4,49 @@ public class MergeTwoLists {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		mergeTwoLists(new ListNode(2), new ListNode(1));
+		MergeTwoLists instance = new MergeTwoLists();
+		instance.mergeTwoLists(new ListNode(2), new ListNode(1));
 	}
 	
+	
+	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        // Insert l2 into l1
+        if (l2 == null) {
+            return l1;
+        }
+        if (l1 == null) {
+            return l2;
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = l1;
+        
+        ListNode pt1 = dummy;
+        ListNode pt2 = l2;
+        while (pt2 != null) {
+            if (pt1.next != null) {
+                if (pt2.val < pt1.next.val) {
+                    ListNode node = pt2;
+                    pt2 = pt2.next;
+                    
+                    node.next = pt1.next;
+                    pt1.next = node;
+                    pt1 = pt1.next;
+                } else {
+                    pt1 = pt1.next;
+                }
+            } else {
+                ListNode node = pt2;
+                pt2 = pt2.next;
+                
+                node.next = pt1.next;
+                pt1.next = node;
+            }
+        }
+        
+        return dummy.next;
+    }
+	/*
 	public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 		ListNode head = null, current = null;
 		
@@ -55,5 +95,5 @@ public class MergeTwoLists {
         }
 		return head;
     }
-
+*/
 }
