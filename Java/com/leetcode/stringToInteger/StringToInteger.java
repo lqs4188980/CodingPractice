@@ -5,7 +5,7 @@ public class StringToInteger {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		StringToInteger instance = new StringToInteger();
-		System.out.println(instance.atoi("abc"));
+		System.out.println(instance.atoi("+-2"));
 	}
 	
 	public int atoi(String str) {
@@ -58,18 +58,16 @@ public class StringToInteger {
             }
         }
         
-        if (s.length() - index > 10) {
-            if (sign == 1) {
-                return Integer.MAX_VALUE;
-            } else {
-                return Integer.MIN_VALUE;
-            }
-        }
         
         long cache = 0;
         long multiplier = 1;
         for (int j = s.length() - 1; j >= index; --j) {
             cache += (s.charAt(j) - 48) * multiplier;
+            if (cache * sign >= Integer.MAX_VALUE) {
+            	return Integer.MAX_VALUE;
+            } else if (cache * sign <= Integer.MIN_VALUE){
+            	return Integer.MIN_VALUE;
+            }
             multiplier *= 10;
         }
         
