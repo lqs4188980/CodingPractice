@@ -5,14 +5,14 @@ public class WildcardMatching {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WildcardMatching instance = new WildcardMatching();
-		System.out.println(instance.isMatch("aa", "*"));
+		System.out.println(instance.isMatch("hi", "*?"));
 	}
 	
-    public boolean isMatch(String s, String p) {
+	public boolean isMatch(String s, String p) {
         if (s == null || p == null) {
             return false;
         }
-        if (s.length() == 0 && p.length() == 0) {
+        if (s.length() == 0 && p.length() == 0 || s.equals(p)) {
             return true;
         }
         
@@ -21,82 +21,69 @@ public class WildcardMatching {
         
         int p1 = 0,
             p2 = 0;
-        while (p1 < Slength && p2 < Plength) {
-            char token = p.charAt(p2);
-            if (token == '*') {
-            	++p2;
-                while (p2 < Plength && (token = p.charAt(p2)) == '*') {
-                    ++p2;
-                }
-                
-                // Exit condition: token != '*' or p2 == Plength
-                // Plength - 1 is '*'
-                if (p2 == Plength) {
+        int lastMatch = -1;
+        while (p1 < Slength || p2 < Plength) {
+            if (p1 == Slength && p2 < Plength) {
+                if (p2 == Plength - 1 && p.charAt(p2) == '*') {
                     return true;
                 }
-                
-                if (token == '?') {
-                	// Last char
-                    if (p2 == Plength - 1 && p1 >= 0) {
-                    	return true;
+                System.out.println("#1");
+                return false;
+            } 
+            if (p1 < Slength && p2 == Plength) {
+            	System.out.println("#2");
+                return false;
+            }
+            
+            
+            while (p2 < Plength && p.charAt(p2) == '*') {
+                ++p2;
+            }
+            
+            if (p2 == Plength) {
+                return true;
+            }
+            
+            char token = p.charAt(p2);
+            
+            if (token == '?') {
+                lastMatch = p1;
+                ++p1;
+            } else {
+                if (token != s.charAt(p1) && p2 - 1 >= 0 && p.charAt(p2 - 1) == '*') {
+                    p1 = lastMatch + 1;
+                    while (p1 < Slength && s.charAt(p1) != token) {
+                        ++p1;
+                    }
+                    if (p1 == Slength) {
+                    	System.out.println("#3");
+                        return false;
+                    } else {
+                        lastMatch = p1;
+                        ++p1;
+                    }
+                } else if (token != s.charAt(p1) && p2 - 1 < 0) {
+                	System.out.println("#4");
+                    return false;
+                } else if (token != s.charAt(p1) && p.charAt(p2 - 1) != '*') {
+                    p1 = lastMatch + 1;
+                    while (p2 >= 0 && p.charAt(p2) != '*') {
+                        --p2;
                     }
                     
-                    token = p.charAt(++p2);
-                    ++p1;
-                    if (token == '*' || token == '?') {
-                    	continue;
-                    } else {
-						while (p1 < Slength && s.charAt(p1) != token) {
-							++p1;
-						}
-						if (p1 == Slength) {
-							return false;
-						} else {
-							++p1;
-							++p2;
-							continue;
-						}
-					}
-                    
-                }
-                
-                while (p1 < Slength && s.charAt(p1) != token) {
-                    ++p1;
-                }
-                
-                if (p1 == Slength) {
-                    return false;
+                    if (p2 < 0) {
+                    	System.out.println("#5");
+                        return false;
+                    }
                 } else {
+                    lastMatch = p1;
                     ++p1;
-                    ++p2;
-                    continue;
                 }
             }
             
-            
-            // p2 < Plength: '?' or some other chars
-            if (token == '?') {
-                // match every char, but must be a char
-                ++p1;
-                ++p2;
-                continue;
-            }
-            
-            // Normal char pattern
-            if (s.charAt(p1) != token) {
-                return false;
-            } else {
-                ++p1;
-                ++p2;
-                continue;
-            }
-            
+            ++p2;
         }
-        if ((p1 == Slength && p2 == Plength - 1 && p.charAt(p2) == '*') || p1 == Slength && p2 == Plength) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
 }
