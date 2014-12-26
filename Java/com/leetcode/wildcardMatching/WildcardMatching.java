@@ -21,69 +21,64 @@ public class WildcardMatching {
         
         int p1 = 0,
             p2 = 0;
-        int lastMatch = -1;
-        while (p1 < Slength || p2 < Plength) {
-            if (p1 == Slength && p2 < Plength) {
-                if (p2 == Plength - 1 && p.charAt(p2) == '*') {
-                    return true;
-                }
-                System.out.println("#1");
+        // Record the p1 position when encounter a * in p
+        int lastP1 = -1;
+        // Record last * position
+        int lastStar = -1;
+        // Decide if previous char of p2 is *
+        boolean prevStar = false;
+        while (p1 < Slength) {
+            if (p2 == Plength && lastStar == -1) {
                 return false;
-            } 
-            if (p1 < Slength && p2 == Plength) {
-            	System.out.println("#2");
-                return false;
-            }
-            
-            
-            while (p2 < Plength && p.charAt(p2) == '*') {
-                ++p2;
-            }
-            
-            if (p2 == Plength) {
-                return true;
+            } else if (p2 == Plength && lastStar != -1) {
+                p1 = lastP1 + 1;
+                p2 = lastStar;
+                continue;
             }
             
             char token = p.charAt(p2);
-            
-            if (token == '?') {
-                lastMatch = p1;
-                ++p1;
-            } else {
-                if (token != s.charAt(p1) && p2 - 1 >= 0 && p.charAt(p2 - 1) == '*') {
-                    p1 = lastMatch + 1;
-                    while (p1 < Slength && s.charAt(p1) != token) {
-                        ++p1;
-                    }
-                    if (p1 == Slength) {
-                    	System.out.println("#3");
-                        return false;
-                    } else {
-                        lastMatch = p1;
-                        ++p1;
-                    }
-                } else if (token != s.charAt(p1) && p2 - 1 < 0) {
-                	System.out.println("#4");
-                    return false;
-                } else if (token != s.charAt(p1) && p.charAt(p2 - 1) != '*') {
-                    p1 = lastMatch + 1;
-                    while (p2 >= 0 && p.charAt(p2) != '*') {
-                        --p2;
-                    }
-                    
-                    if (p2 < 0) {
-                    	System.out.println("#5");
-                        return false;
-                    }
-                } else {
-                    lastMatch = p1;
-                    ++p1;
+            if (token == '*') {
+                while (p2 < Plength && p.charAt(p2) == '*') {
+                    ++p2;
                 }
+                
+                if (p2 == Plength) {
+                    return true;
+                }
+                
+                prevStar = true;
+                lastStar = p2 - 1;
+                lastP1 = p1;
+                continue;
             }
             
+            if (token == '?' || token == s.charAt(p1)) {
+                ++p1;
+                ++p2;
+                prevStar = false;
+                continue;
+            } else {
+                if (prevStar) {
+                    ++p1;
+                } else if (lastStar != -1) {
+                    p1 = lastP1 + 1;
+                    p2 = lastStar;
+                } else {
+                    return false;
+                }
+            }
+        }
+        
+        while (p2 < Plength && p.charAt(p2) == '*') {
             ++p2;
         }
-        return true;
+        
+        if (p2 == Plength) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
 }
