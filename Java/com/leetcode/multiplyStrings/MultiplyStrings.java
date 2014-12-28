@@ -1,5 +1,7 @@
 package com.leetcode.multiplyStrings;
 
+import java.util.Arrays;
+
 public class MultiplyStrings {
 
 	public static void main(String[] args) {
@@ -8,6 +10,53 @@ public class MultiplyStrings {
 		System.out.println(instance.multiply("140", "721"));
 	}
 	
+	// A more concise solution
+	public String multiply(String num1, String num2) {
+        if (num1 == null || num2 == null || num1.length() == 0 || num2.length() == 0 || num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        
+        // Processing Data
+        StringBuilder n1 = new StringBuilder(num1);
+        StringBuilder n2 = new StringBuilder(num2);
+        n1.reverse();
+        n2.reverse();
+        
+        int carry = 0;
+        
+        // result array
+        char[] result = new char[n1.length() + n2.length() + 1];
+        Arrays.fill(result, '0');
+        
+        int value = -1;
+        for (int i = 0; i < n1.length(); ++i) {
+            for (int j = 0; j < n2.length(); ++j) {
+                value = (n1.charAt(i) - 48) * (n2.charAt(j) - 48) + carry + (result[i + j] - '0');
+                result[i + j] = (char)(value % 10 + 48);
+                carry = value / 10;
+            }
+            
+            int index = i + n2.length();
+            while (carry != 0) {
+                value = carry + (result[index] - '0');
+                result[index++] = (char)(value % 10 + 48);
+                carry = value / 10;
+            }
+        }
+        
+        int start = Integer.MAX_VALUE;
+        for (start = result.length - 1; start >= 0 && result[start] == '0'; --start) {
+            
+        }
+        
+        StringBuilder s = new StringBuilder();
+        for (int i = start; i >= 0; --i) {
+            s.append(result[i]);
+        }
+        
+        return s.toString();
+    }
+	/* a correct solution
     public String multiply(String num1, String num2) {
         if (num1 == null || num2 == null || num1.length() == 0 || num2.length() == 0 || num1.equals("0") || num2.equals("0")) {
             return "0";
@@ -105,9 +154,10 @@ public class MultiplyStrings {
         }
         return builder.toString();
     }
-
+	*/
 }
 
+/*
 class DLinkedList {
     DLinkedList prior = null;
     DLinkedList next = null;
@@ -117,3 +167,5 @@ class DLinkedList {
         value = v;
     }
 }
+
+*/
