@@ -1,5 +1,7 @@
 package com.leetcode.combinationSum;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,21 +10,22 @@ public class CombinationSum {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] candidates = {7, 4, 5};
-		System.out.println(combinationSum(candidates, 9).size());
+		CombinationSum instance = new CombinationSum();
+		System.out.println(instance.combinationSum(candidates, 9).size());
 	}
 	
-    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
-        LinkedList<LinkedList<Integer>> solutions = new LinkedList<LinkedList<Integer>>();
+	public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        ArrayList<ArrayList<Integer>> solutions = new ArrayList<ArrayList<Integer>>();
         if (candidates == null || candidates.length == 0) {
             return (List)solutions;
         }
         
-        candidates = mergeSort(candidates, 0, candidates.length);
-        deepSearch(candidates, target, new LinkedList<Integer>(), solutions, 0, 0);
+        Arrays.sort(candidates);
+        deepSearch(candidates, target, new ArrayList<Integer>(), solutions, 0, 0);
         return (List)solutions;
     }
     
-    private static void deepSearch(int[] candidates, int target, LinkedList<Integer> solution, LinkedList<LinkedList<Integer>> solutions, int sum, int index) {
+    private void deepSearch(int[] candidates, int target, ArrayList<Integer> solution, ArrayList<ArrayList<Integer>> solutions, int sum, int index) {
         if (sum == target) {
             solutions.add(solution);
             return;
@@ -30,7 +33,7 @@ public class CombinationSum {
         
         for (int i = index; i < candidates.length; i++) {
             if (sum + candidates[i] <= target) {
-                LinkedList<Integer> cloned = (LinkedList<Integer>)solutions.clone();
+                ArrayList<Integer> cloned = (ArrayList<Integer>)solution.clone();
                 cloned.add(candidates[i]);
                 deepSearch(candidates, target, cloned, solutions, sum + candidates[i], i);
             } else {
