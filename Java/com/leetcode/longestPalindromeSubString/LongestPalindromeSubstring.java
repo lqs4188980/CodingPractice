@@ -2,43 +2,41 @@ package com.leetcode.longestPalindromeSubString;
 
 public class LongestPalindromeSubstring {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		longestPalindrome("aaaa");
-	}
 	
-    public static String longestPalindrome(String s) {
+	
+	public String longestPalindrome(String s) {
         
         if (s == null || s.length() == 0 || s.length() == 1) {
             return s;
         }
         
-        int length = s.length();
-        boolean[][] state = new boolean[length][length];
-        
-        for (int i = 0; i < length; i++) {
-            state[i][i] = true;
+        boolean[][] palin = new boolean[s.length()][s.length()];
+        for (int i = 0; i < palin.length; ++i) {
+            palin[i][i] = true;
         }
         
-        int 
-            max = 0,
-            start = 0,
-            end = 0;
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < i; j++) {
-            	System.out.println("j: " + j + ", i: " + i);
-                state[j][i] = (s.charAt(j) == s.charAt(i) && (i - j < 2 || state[j + 1][i - 1]));
-                System.out.println("state[" + j + "]" + "[" + i + "] = " + state[j][i]);
-                if (state[j][i] && i - j + 1 > max) {
-                	System.out.println("Update start and end");
-                    max = i - j + 1;
-                    start = j;
-                    end = i;
+        int max = 1;
+        int start = 0;
+        int end = 0;
+        for (int i = 1; i < s.length(); ++i) {
+            for (int j = i - 1; j >= 0; --j) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (i - j < 2 || palin[i - 1][j + 1]) {
+                        palin[i][j] = true;
+                    }
+                    
+                    if (palin[i][j]) {
+                        int length = i - j + 1;
+                        if (length > max) {
+                            start = j;
+                            end = i;
+                            max = length;
+                        }
+                    }
                 }
             }
         }
         
-        System.out.println("start: " + start + ", end: " + end);
         return s.substring(start, end + 1);
     }
 

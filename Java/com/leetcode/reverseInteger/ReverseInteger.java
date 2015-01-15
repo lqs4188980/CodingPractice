@@ -1,45 +1,33 @@
 package com.leetcode.reverseInteger;
 
-import java.util.LinkedList;
-
 public class ReverseInteger {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.print(reverse(123));
-	}
 	
-	public static int reverse(int x) {
-		if ((x < 10 && x >= 0) || (x > -10 && x <= 0)) {
+	public int reverse(int x) {
+        if (x > -10 && x < 10) {
             return x;
         }
-        int num = x;
-        if (x < 0) {
-            num = -x;
-        }
-        LinkedList<Integer> queue = new LinkedList<Integer>();
-        int count = 0;
-        int reverse = 0;
-        while (num > 0) {
-            queue.add(num % 10);
-            num /= 10;
-            count++;
+        
+        long reverse = 0;
+        long temp = x;
+        int sign = 1;
+        
+        if (temp < 0) {
+            sign = -1;
+            temp *= -1;
         }
         
-        count--;
-        System.out.println(count);
-        while (count > 0) {
-        	int bit = queue.pop();
-        	System.out.print(bit);
-            reverse += Math.pow(bit, count);
+        while (temp > 0) {
+            reverse = reverse * 10 + temp % 10;
+            temp /= 10;
         }
-        reverse += queue.pop();
         
-        if (x > 0) {
-            return reverse;
-        } else {
-            return -reverse;
+        reverse *= sign;
+        
+        if (reverse > Integer.MAX_VALUE || reverse < Integer.MIN_VALUE) {
+            return 0;
         }
+        
+        return (int)reverse;
     }
 
 }

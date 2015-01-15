@@ -9,78 +9,86 @@ public class StringToInteger {
 	}
 	
 	public int atoi(String str) {
-        if (str == null || str.equals("")) {
+        if (str == null || str.length() == 0) {
             return 0;
         }
         
-        int i = 0;
-        int length = str.length();
-        while (i < length && str.charAt(i) == ' ') {
-            ++i;
-        }
-        
-        if (i < length) {
-            String num = "";
-            char sign = str.charAt(i);
-            int start = i;
-            if (sign == '-' || sign == '+') {
-                ++i;
+        int start = -1;
+        int index = 0;
+        char c = ' ';
+        boolean hasSign = false;
+        while (index < str.length()) {
+            c = str.charAt(index);
+            if (c <= '9' && c >= '0') {
+                if (!hasSign) {
+                    start = index;
+                }
+                break;
             }
-            for (int j = i; j < length; ++j) {
-                char c = str.charAt(j);
-                if (c < '0' || c > '9') {
-                    num = str.substring(start, j);
-                    break;
+            
+            else if (c == '+' || c == '-') {
+                if (hasSign) {
+                    return 0;
+                } else {
+                    hasSign = true;
+                    start = index;
                 }
             }
             
-            if (num == "") {
-                num = str.substring(start, length);
+            else if (c != ' ') {
+                return 0;
             }
             
-            return convert(num);
-        } else {
+            ++index;
+        }
+        
+        if (start == -1) {
             return 0;
         }
+        
+        int end;
+        c = ' ';
+        for (end = start + 1; end < str.length(); ++end) {
+            c = str.charAt(end);
+            if (c < '0' || c > '9') {
+                break;
+            }
+        }
+        
+        if (hasSign && end - start < 2) {
+            return 0;
+        }
+        
+        return parseInt(str.substring(start, end));
     }
     
-    private int convert(String s) {
-        if (s == null || s.equals("")) {
-            return 0;
-        }
+    private int parseInt(String s) {
         int sign = 1;
         int index = 0;
-        char c = s.charAt(0);
-        if (c == '-' || c == '+') {
-            index++;
-            if (c == '-') {
-                sign = -1;
+        char first = s.charAt(0);
+        
+        if (first == '-' || first == '+') {
+            sign = first == '-' ? -1 : 1;
+            ++index;
+        }
+        
+        long raw = 0;
+        while (index < s.length()) {
+            raw = raw * 10 + s.charAt(index) - '0';
+            if (sign == 1 && raw >= Integer.MAX_VALUE) {
+                return Integer.MAX_VALUE;
             }
-        }
-        
-        
-        long cache = 0;
-        long multiplier = 1;
-        for (int j = s.length() - 1; j >= index; --j) {
-            cache += (s.charAt(j) - 48) * multiplier;
-            if (cache * sign >= Integer.MAX_VALUE) {
-            	return Integer.MAX_VALUE;
-            } else if (cache * sign <= Integer.MIN_VALUE){
-            	return Integer.MIN_VALUE;
+            
+            if (sign == -1 && raw > Integer.MAX_VALUE) {
+                return Integer.MIN_VALUE;
             }
-            multiplier *= 10;
+            
+            ++index;
         }
         
-        cache *= sign;
         
-        if (cache >= Integer.MAX_VALUE) {
-            return Integer.MAX_VALUE;
-        } else if (cache <= Integer.MIN_VALUE) {
-            return Integer.MIN_VALUE;
-        } else {
-            return (int)cache;
-        }
         
+        return (int)(raw * sign);
     }
 
 }
