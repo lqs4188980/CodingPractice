@@ -2,22 +2,25 @@ package com.leetcode.firstMissingPositive;
 
 public class FirstMissingPositive {
 	public int firstMissingPositive(int[] A) {
-        int i = 0;
-        while (i < A.length) {
-            
-            if (A[i] > 0 && A[i] < A.length && A[i] != A[A[i] - 1]) {
-                int temp = A[i];
-                A[i] = A[temp - 1];
-                A[temp - 1] = temp;
-                i--;
-            }
-            
-            i++;
+        if (A == null || A.length == 0) {
+            return 1;
         }
         
-        for (i = 0; i < A.length; i++) {
-            if (A[i] != (i + 1)) {
-                return i + 1;
+        int temp = -1;
+        int i = 0;
+        while (i < A.length) {
+            if (A[i] <= A.length && A[i] > 0 && A[i] != A[A[i] - 1]) {
+                temp = A[A[i] - 1];
+                A[A[i] - 1] = A[i];
+                A[i] = temp;
+            } else {
+                ++i;
+            }
+        }
+        
+        for (int j = 0; j < A.length; ++j) {
+            if (A[j] != j + 1) {
+                return j + 1;
             }
         }
         

@@ -2,70 +2,66 @@ package com.leetcode.substringWithConcatenationOfAllWords;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class SubstringWithConcatenationOfAllWords {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String[] L = {"fooo","barr","wing","ding","wing"};
-		List<Integer> list = findSubstring("lingmindraboofooowingdingbarrwingmonkeypoundcake", L);
-		for (int i : list) {
-			System.out.print(i + " ");
-		}
-		System.out.print('\n');
-	}
 	
-    public static List<Integer> findSubstring(String S, String[] L) {
-        ArrayList<Integer> solutions = new ArrayList<Integer>();
-        if (S == null || L == null || L.length == 0) {
-            return (List)solutions;
+	public List<Integer> findSubstring(String S, String[] L) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        
+        if (S == null || S.length() == 0 || L == null || L.length == 0) {
+            return (List)result;
         }
         
-        HashMap<String, Integer> table = new HashMap<String, Integer>();
+        HashMap<String, Integer> wordDict = new HashMap<String, Integer>();
+        HashSet<Character> initialSet = new HashSet<Character>();
         
         for (String s : L) {
-            if (!table.containsKey(s)) {
-                table.put(s, 1);
+            if (wordDict.containsKey(s)) {
+                wordDict.put(s, wordDict.get(s) + 1);
             } else {
-                table.put(s, table.get(s) + 1);
+                wordDict.put(s, 1);
+                initialSet.add(s.charAt(0));
             }
         }
         
-        StringBuilder builder = new StringBuilder(S);
+        int wordLen = L[0].length();
+        int range = wordLen * L.length;
         
-        int length = builder.length();
-        int wordLength = L[0].length();
-        
-        int i = 0;
-        
-        while (i + wordLength < length) {
-            HashMap<String, Integer> cloneMap = (HashMap<String, Integer>)table.clone();
-            int start = i;
-            while (!cloneMap.isEmpty() && i + wordLength < length) {
-                String sub = builder.substring(i, i + wordLength);
-                if (cloneMap.containsKey(sub)) {
-                    int value = cloneMap.get(sub);
-                    
-                    if (value == 1) {
-                        cloneMap.remove(sub);
+        HashMap<String, Integer> found = new HashMap<String, Integer>();
+        int count = 0;
+        for (int i = 0; i < S.length() - range + 1; ++i) {
+            if (initialSet.contains(S.charAt(i))) {
+                found.clear();
+                count = 0;
+                for (int j = 0; j < range;) {
+                    String s = S.substring(i + j, i + (j += wordLen));
+                    if (wordDict.containsKey(s)) {
+                        if (found.containsKey(s)) {
+                            found.put(s, found.get(s) + 1);
+                        } else {
+                            found.put(s, 1);
+                        }
                     } else {
-                        cloneMap.put(sub, value - 1);
+                        break;
                     }
                     
-                    i = i + wordLength;
-                } else {
-                    break;
+                    if (wordDict.get(s) >= found.get(s)) {
+                        ++count;
+                    } else {
+                        break;
+                    }
+                }
+                
+                if (count == L.length) {
+                    result.add(i);
                 }
             }
-            
-            if (cloneMap.isEmpty()) {
-                solutions.add(start);
-            }
-            i = start + 1;
         }
         
-        return (List)solutions;
+        return (List)result;
     }
 
 }

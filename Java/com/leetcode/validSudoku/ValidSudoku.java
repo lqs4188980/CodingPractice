@@ -1,63 +1,76 @@
 package com.leetcode.validSudoku;
 
-import java.util.HashSet;
-
 public class ValidSudoku {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		char[][] board = {{'.', '.', '.', '.', '5', '.', '.', '1', '.' },{'.', '4', '.', '3', '.', '.', '.', '.', '.' },{'.', '.', '.', '.', '.', '3', '.', '.', '1'},{'8', '.', '.', '.', '.', '.', '.', '2', '.'},{'.', '.', '2', '.', '7', '.', '.', '.', '.'},{'.', '1', '5', '.', '.', '.', '.', '.', '.'},{'.', '.', '.', '.', '.', '2', '.', '.', '.'},{'.', '2', '.', '9', '.', '.', '.', '.', '.'},{'.', '.', '4', '.', '.', '.', '.', '.', '.'}};
-		System.out.println(isValidSudoku(board));
-	}
-	
-    static HashSet<Integer> table = new HashSet<Integer>();
-    public static boolean isValidSudoku(char[][] board) {
-        if (board == null || (board.length == 0 && board[0].length == 0)) {
+	public boolean isValidSudoku(char[][] board) {
+        if (board == null || board.length == 0) {
             return false;
         }
         
-        
-        for (int i = 1; i <= 9; i++) {
-            table.add(i);
-        }
-        
-        for (int l = 0; l < board.length; l++) {
-            if (!checker(board, l, l + 1, 0, board[0].length)) {
-                return false;
-            }
-        }
-        
-        for (int c = 0; c < board[0].length; c++) {
-            if (!checker(board, 0, board.length, c, c + 1)) {
-                return false;
-            }
-        }
-        
-        for (int l = 0; l < board.length; l += 3) {
-            for (int c = 0; c < board[0].length; c += 3) {
-            	System.out.println("************* " + l + ", " + c + " ****************");
-                if (!checker(board, l, l + 3, c, c + 3)) {
+        for (int i = 0; i < board.length; i += 3) {
+            for (int j = 0; j < board.length; j += 3) {
+                if (!isValidSquare(board, i, j)) {
                     return false;
                 }
             }
         }
         
-        return true;
+        for (int i = 0; i < board.length; ++i) {
+            if (!isValidLine(board, i)) {
+                return false;
+            }
+        }
         
+        return true;
     }
     
-    private static boolean checker(char[][] board, int lineStart, int lineLength, int columnStart, int columnLength) {
-        HashSet<Integer> sheet = (HashSet<Integer>)table.clone();
+    private boolean isValidSquare(char[][] board, int rowIndex, int columnIndex) {
+        int rowBound = rowIndex + 3;
+        int columnBound = columnIndex + 3;
+        int[] table = new int[10];
+        int digit = 0;
+        for (int i = rowIndex; i < rowBound; ++i) {
+            for (int j = columnIndex; j < columnBound; ++j) {
+                if (board[i][j] != '.') {
+                    digit = board[i][j] - '0';
+                    if (table[digit] == 0) {
+                        table[digit] = 1;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
         
-        for (int i = lineStart; i < lineLength; i++) {
-            for (int j = columnStart; j < columnLength; j++) {
-            	System.out.println("(" + i + ", " + j + ") = " + board[i][j]);
-                if (board[i][j] == '.') {
-                    continue;
-                } else if (!sheet.contains(board[i][j] - 48)) {
-                    return false;
+        return true;
+    }
+    
+    private boolean isValidLine(char[][] board, int index) {
+        int bound = board.length;
+        int[] table = new int[10];
+        int digit = 0;
+        for (int i = 0; i < bound; ++i) {
+            if (board[index][i] != '.') {
+                digit = board[index][i] - '0';
+                if (table[digit] == 0) {
+                    table[digit] = 1;
                 } else {
-                    sheet.remove(board[i][j] - 48);
+                    return false;
+                }
+            }
+        }
+        
+        for (int i = 1; i < 10; ++i) {
+            table[i] = 0;
+        }
+        
+        for (int i = 0; i < bound; ++i) {
+            if (board[i][index] != '.') {
+                digit = board[i][index] - '0';
+                if (table[digit] == 0) {
+                    table[digit] = 1;
+                } else {
+                    return false;
                 }
             }
         }

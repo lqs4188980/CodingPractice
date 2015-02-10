@@ -4,10 +4,11 @@ public class DivideTwoIntegers {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(divide(1, -1));
+		DivideTwoIntegers instance = new DivideTwoIntegers();
+		System.out.println(instance.divide(Integer.MIN_VALUE, -1));
 	}
 	
-    public static int divide(int dividend, int divisor) {
+	public int divide(int dividend, int divisor) {
         if (dividend == 0) {
             return 0;
         }
@@ -16,53 +17,59 @@ public class DivideTwoIntegers {
             return dividend >> 1;
         }
         
-        int negative = 0;
         long dvn = dividend;
         long dvs = divisor;
+        int negative = 0;
         
         if (dvn < 0) {
-            dvn = ~dvn + 1;
-            //System.out.println(dvn);
             negative ^= 1;
+            dvn = ~dvn + 1;
         }
         
         if (dvs < 0) {
-            dvs = ~dvs + 1;
-            //System.out.println(dvs);
             negative ^= 1;
+            dvs = ~dvs + 1;
         }
         
-        int value = getDivision(dvn, dvs);
+        long value = getDivide(dvn, dvs);
+        
         if (negative == 1) {
-            return (~value + 1);
+            value = ~value + 1;
         }
-        return value;
+        
+        if (value >= Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+        
+        if (value <= Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        
+        return (int)value;
     }
     
-    private static int getDivision(long dividend, long divisor) {
-        if (divisor == 1) {
-            return (int)dividend;
+    private long getDivide(long dvn, long dvs) {
+        if (dvn < dvs) {
+            return 0;
         }
         
         int count = 0;
-        long sub = divisor;
-        int result = 0;
-        while (dividend >= sub) {
-            sub <<= 1;
-            count++;
+        long multi = dvs;
+        while (dvn >= multi) {
+            multi <<= 1;
+            ++count;
         }
         
-        while (dividend >= divisor) {
-        	//System.out.println(dividend);
-            if (dividend >= sub) {
-                dividend -= sub;
-                result += 1 << count;
+        long result = 0;
+        while (dvn >= dvs) {
+            if (dvn >= multi) {
+                dvn -= multi;
+                result += ((long)1 << count);
             }
             
-            sub >>= 1;
-            count--;
+            multi >>= 1;
+            --count;
         }
-        
         
         return result;
     }

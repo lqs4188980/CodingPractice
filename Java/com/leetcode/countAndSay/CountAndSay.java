@@ -3,79 +3,56 @@ package com.leetcode.countAndSay;
 import java.util.LinkedList;
 
 public class CountAndSay {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println(countAndSay(2));
-	}
 	
-    public static String countAndSay(int n) {
-        if (n == 1) {
-            return "1";
+	public String countAndSay(int n) {
+        if (n < 1) {
+            return "";
         }
         
-        LinkedList<Character> queue = new LinkedList<Character>();
+        LinkedList<Integer> queue = new LinkedList<Integer>();
         
-        queue.add('1');
+        int cache = -1,
+            counter = 0,
+            curr = -1,
+            level = 1;
+            
+        queue.add(1);
+        queue.add(0);
         
-        int i = 2,
-            count = 0;
-        char c = '-';
-        while (i <= n) {
-            int j = 0;
-            int size = queue.size();
-            while (j < size) {
-                char buf = queue.poll();
-                if (c == '-' && j == size - 1) {
-                    addToQueue(buf, 1, queue);
-                } else if (c != '-' && j == size - 1) {
-                    if (c == buf) {
-                        count++;
-                        addToQueue(c, count, queue);
+        while (level < n) {
+            curr = queue.pop();
+            if (curr != 0) {
+                if (cache != -1) {
+                    if (cache != curr) {
+                        queue.add(counter);
+                        queue.add(cache);
+                        cache = curr;
+                        counter = 1;
                     } else {
-                        addToQueue(c, count, queue);
-                        addToQueue(buf, 1, queue);
+                        ++counter;
                     }
-                    count = 0;
-                } else if (c == '-' && j != size - 1){
-                    c = buf;
-                    count = 1;
                 } else {
-                    if (c == buf) {
-                        count++;
-                    } else {
-                        addToQueue(c, count, queue);
-                        c = buf;
-                        count = 1;
-                    }
+                    cache = curr;
+                    counter = 1;
                 }
                 
-                j++;
+            } else {
+                ++level;
+                queue.add(counter);
+                queue.add(cache);
+                cache = -1;
+                counter = 0;
+                
+                queue.add(0);
             }
-            c = '-';
-            i++;
         }
         
-        StringBuilder builder = new StringBuilder();
-        int size = queue.size();
-        for (char ch : queue) {
-        	System.out.println(ch);
-        }
-        i = 0;
-        while (i < size) {
-            builder.append(queue.pollLast());
-            i++;
+        StringBuilder b = new StringBuilder();
+        while ((curr = queue.pop()) != 0) {
+            b.append(curr);
         }
         
-        return builder.toString();
-    }
-    
-    private static void addToQueue(char c, int count, LinkedList<Character> queue) {
-        queue.add(c);
-        while (count > 0) {
-            queue.add((char)(count % 10 + 48));
-            count /= 10;
-        }
+        return b.toString();
     }
 
 }
