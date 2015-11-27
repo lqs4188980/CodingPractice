@@ -1,5 +1,4 @@
-import gc
-from pdb import set_trace as bp
+# 1104
 class Solution(object):
     def __init__(self):
         self.result = []
@@ -33,13 +32,23 @@ class Solution(object):
             idx += 1 
         return result
 
-s = Solution()
-_str = "----++++--------++++-------+++++++-+-+-+-+"
-_str = '++++'
-print _str
-print s.find_all(0, _str, '--')
-print s.find_all(0, _str, '++')
-result=s.generatePossibleNextMoves(_str)
-import pprint
-pprint.PrettyPrinter(indent=4).pprint(result)
-print len(set(result))
+# 1126
+class Solution(object):
+    def generatePossibleNextMoves(self, s):
+        """
+        :type s: str
+        :rtype List[str]
+        """
+        results = []
+        if s == '':
+            return results
+        self.find_next(s, results)
+        return results
+            
+    def find_next(self, curr, results):
+        idx = 0
+        while idx < len(curr) - 1:
+            if curr[idx:idx+2] == '++':
+                _next = curr[:idx] + '--' + curr[idx+2:]
+                results.append(_next)
+            idx += 1
