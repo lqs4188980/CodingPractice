@@ -10,11 +10,11 @@ class Solution(object):
                 stack.append(char)
             elif len(stack) == 0:
                 return False
-            elif char != self.get_mirror(stack[-1]):
+            elif self.get_mirror(char) != stack[-1]:
                 return False
             else:
                 stack.pop()
-        return True
+        return len(stack) == 0
     
     def get_mirror(self, char):
         if char == ')':
