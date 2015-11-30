@@ -16,3 +16,4 @@ class Solution(object):
 			i = j
 
 		return ranges
+		

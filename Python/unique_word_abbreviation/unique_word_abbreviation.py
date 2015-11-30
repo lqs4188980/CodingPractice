@@ -2,10 +2,6 @@
 
 class ValidWordAbbr(object):
     def __init__(self, dictionary):
-        """
-        initialize your data structure here.
-        :type dictionary: List[str]
-        """
         self.abbr = {}
         for word in dictionary:
             abbr = self.get_abbr(word)
@@ -35,3 +31,4 @@ class ValidWordAbbr(object):
             return True
         else:
             return False
+            

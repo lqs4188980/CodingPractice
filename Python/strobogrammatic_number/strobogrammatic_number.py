@@ -35,3 +35,4 @@ class Solution(object):
             return '8'
         elif num_char == '9':
             return '6'
+            

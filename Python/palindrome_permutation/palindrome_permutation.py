@@ -1,9 +1,5 @@
 class Solution(object):
     def canPermutePalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
         # odd, one odd
         # even, all even
         counts = {}
@@ -19,3 +15,4 @@ class Solution(object):
             return odd_count == 0
         else:
             return odd_count == 1
+            

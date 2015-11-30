@@ -1,10 +1,7 @@
 # slow
+
 class Solution(object):
     def canWin(self, s):
-        """
-        :type s:str
-        "rtype: bool
-        """
         if '++' not in s:
             return False
         can_win = False
@@ -15,3 +12,4 @@ class Solution(object):
                 not self.canWin(s[:idx] + '--' + s[idx+2:])
             idx += 1
         return can_win
+        

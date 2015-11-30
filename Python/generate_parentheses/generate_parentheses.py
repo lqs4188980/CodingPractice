@@ -1,9 +1,5 @@
 class Solution(object):
     def generateParenthesis(self, n):
-        """
-        :type n: int
-        :rtype: List[str]
-        """
         left = n
         right = n
         result = []
@@ -19,3 +15,4 @@ class Solution(object):
         if left:
             self.generate(curr + '(', left - 1, right, result)
         self.generate(curr + ')', left, right - 1, result)
+        

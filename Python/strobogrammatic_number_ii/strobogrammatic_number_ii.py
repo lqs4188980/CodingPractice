@@ -47,3 +47,4 @@ class Solution(object):
         else:
             return '6'
         # else raise exception
+        

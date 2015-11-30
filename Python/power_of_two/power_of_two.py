@@ -1,9 +1,5 @@
 class Solution(object):
     def isPowerOfTwo(self, n):
-        """
-        :type n: int
-        :rtype: bool
-        """
         is_power = False
         if n <= 0:
             return is_power
@@ -15,3 +11,4 @@ class Solution(object):
                     is_power = not is_power
             n = n >> 1
         return True
+        

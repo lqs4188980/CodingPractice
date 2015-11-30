@@ -1,9 +1,5 @@
 class Solution(object):
     def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
         stack = []
         for char in s:
             if char == '(' or char == '[' or char == '{':
@@ -23,3 +19,4 @@ class Solution(object):
             return '['
         elif char == '}':
             return '{'
+            

@@ -1,12 +1,9 @@
 # 1104
+
 class Solution(object):
     def __init__(self):
         self.result = []
     def generatePossibleNextMoves(self, s):
-        """
-        :type s: str
-        :rtype List[str]
-        """
         if s == "":
             return self.result
         target = '++'
@@ -19,9 +16,6 @@ class Solution(object):
         for idx in idxes:
             s_new = s[:idx] + replace_str + s[idx+len(sub_s):]
             self.result.append(s_new)
-            #slots = self.find_all(idx+2, s_new, replace_str)
-            #if slots != []:
-            #    self.nextStep(slots, s_new, replace_str)
 
     def find_all(self, idx, s, sub_s):
         sub_len = len(sub_s)
@@ -33,12 +27,9 @@ class Solution(object):
         return result
 
 # 1126
+
 class Solution(object):
     def generatePossibleNextMoves(self, s):
-        """
-        :type s: str
-        :rtype List[str]
-        """
         results = []
         if s == '':
             return results

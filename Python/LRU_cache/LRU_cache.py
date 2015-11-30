@@ -3,9 +3,6 @@
 class LRUCache(object):
 
     def __init__(self, capacity):
-        """
-        :type capacity: int
-        """
         # a timestamp queue
         self.cache = {}
         self.timestamp = []
@@ -13,9 +10,6 @@ class LRUCache(object):
         self.cache_size = 0
 
     def get(self, key):
-        """
-        :rtype: int
-        """
         if key in self.cache:
             self.timestamp_update(key)
             return self.cache[key]
@@ -23,11 +17,6 @@ class LRUCache(object):
             return -1
 
     def set(self, key, value):
-        """
-        :type key: int
-        :type value: int
-        :rtype: nothing
-        """
         if key in self.cache:
             self.timestamp_update(key)
         else:
