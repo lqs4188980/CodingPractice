@@ -5,7 +5,7 @@ class Solution(object):
 		result = 0
 		tmp = 1
 		while 5**tmp <= n:
-			result += tmp
+			result += n/5**tmp
 			tmp += 1
 
 		return result

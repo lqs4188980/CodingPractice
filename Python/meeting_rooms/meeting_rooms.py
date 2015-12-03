@@ -43,7 +43,7 @@ class Solution(object):
 
 class Solution(object):
 	def canAttendMeetings(self, intervals):
-		intervals = sorted(intervals, key=lambda i: i[0])
+		intervals = sorted(intervals, key=lambda i: i.start)
 		for i in range(len(intervals) - 1):
 			if intervals[i].end > intervals[i+1].start:
 				return False
