@@ -11,3 +11,4 @@ class Solution(object):
 			view.append(root.val)
 		self.helper(root.right, lvl+1, view)
 		self.helper(root.left, lvl+1, view)
+
