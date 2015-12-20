@@ -11,3 +11,12 @@ class Solution(object):
 				self.helper(res, curr+[start], start, n//start)
 			start += 1
 
+# 32
+#  | -> 2 16
+#       2  | -> 2 8
+#       2       2 | -> 2 4
+#       2       2      2 | -> 2 2
+
+# keeping prefixes
+
+
