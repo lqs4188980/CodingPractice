@@ -1,9 +1,11 @@
-# move backwards
+# move forwards
 class Solution(object):
     def canJump(self, nums):
-        max_idx = len(nums)-1
-        for i in reversed(range(len(nums)-1)):
-            if nums[i] + i >= max_idx:
-                max_idx = i
-        return max_idx == 0
-
+        max_dist = 0
+        for i, num in enumerate(nums):
+            if max_dist >= i:
+                max_dist = max(max_dist, num+i)
+            else:
+                break
+        return max_dist >= len(nums)-1
+# backwards: if(i+num>=last): num=i
