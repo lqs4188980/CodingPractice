@@ -18,6 +18,8 @@ class Solution(object):
                         j += 1
                         k -= 1
                     elif nums[i] + nums[j] + nums[k] > 0:
+                        # go through the same process
+                        # if hit the same elem
                         k -= 1
                     else:
                         j += 1
