@@ -23,7 +23,7 @@ class Solution(object):
             return _str[i] == '0' or _str[i] == '1' or _str[j] == '8'
         else:
             return _str[i] == self.get_mirror(_str[j])
-            
+
     def get_mirror(self, num_char):
         if num_char == '0':
             return '0'
@@ -35,4 +35,3 @@ class Solution(object):
             return '8'
         elif num_char == '9':
             return '6'
-            

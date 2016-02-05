@@ -15,16 +15,15 @@ class ZigzagIterator(object):
         x = self.pos / self.len_col
         y = self.pos % self.len_col
         return self.vectors[y][x]
-                                
+
 
     def hasNext(self):
         self.pos += 1
         x = self.pos / self.len_col
         if x >= self.max_row:
             return False
-        y = self.pos % self.len_col            
+        y = self.pos % self.len_col
         if len(self.vectors[y]) <= x:
             return self.hasNext()
         else:
             return True
-            

@@ -11,4 +11,3 @@ class Solution(object):
                     is_power = not is_power
             n = n >> 1
         return True
-        

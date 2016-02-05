@@ -23,7 +23,7 @@ class Solution(object):
         while idx+sub_len <= len(s):
             if s[idx:idx+sub_len] == sub_s:
                 result.append(idx)
-            idx += 1 
+            idx += 1
         return result
 
 # 1126
@@ -35,7 +35,7 @@ class Solution(object):
             return results
         self.find_next(s, results)
         return results
-            
+
     def find_next(self, curr, results):
         idx = 0
         while idx < len(curr) - 1:

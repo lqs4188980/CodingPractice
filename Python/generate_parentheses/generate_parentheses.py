@@ -6,7 +6,7 @@ class Solution(object):
         curr = ''
         self.generate(curr, left, right, result)
         return result
-        
+
     def generate(self, curr, left, right, result):
         if left > right:
             return
@@ -15,4 +15,3 @@ class Solution(object):
         if left:
             self.generate(curr + '(', left - 1, right, result)
         self.generate(curr + ')', left, right - 1, result)
-        

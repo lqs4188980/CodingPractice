@@ -10,7 +10,7 @@ class Solution(object):
             path_list = []
             self.binaryTreePathsHelper(root, "", path_list)
             return path_list
-        
+
     def binaryTreePathsHelper(self, root, curr_path, path_list):
         """
         :type root: TreeNode

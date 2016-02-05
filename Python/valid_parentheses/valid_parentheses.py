@@ -11,7 +11,7 @@ class Solution(object):
             else:
                 stack.pop()
         return len(stack) == 0
-    
+
     def get_mirror(self, char):
         if char == ')':
             return '('
@@ -19,4 +19,3 @@ class Solution(object):
             return '['
         elif char == '}':
             return '{'
-            

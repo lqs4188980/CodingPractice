@@ -13,7 +13,7 @@ class NumMatrix(object):
                 if j == 0:
                     self.row_dp[i].append(matrix[i][j])
                 else:
-                    self.row_dp[i].append(self.row_dp[i][j-1] + self.matrix[i][j]) 
+                    self.row_dp[i].append(self.row_dp[i][j-1] + self.matrix[i][j])
 
     def update(self, row, col, val):
         if self.row_dp == []:

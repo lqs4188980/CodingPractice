@@ -9,14 +9,14 @@ class ValidWordAbbr(object):
                 self.abbr[abbr] = [word]
             elif word not in self.abbr[abbr]:
                 self.abbr[abbr].append(word)
-        
-        
+
+
     def get_abbr(self, word):
         if len(word) < 3:
             return word
         else:
             return word[0] + str(len(word)-2) + word[-1]
-        
+
 
     def isUnique(self, word):
         """
@@ -31,4 +31,3 @@ class ValidWordAbbr(object):
             return True
         else:
             return False
-            

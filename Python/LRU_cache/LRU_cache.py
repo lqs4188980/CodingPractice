@@ -38,4 +38,3 @@ class LRUCache(object):
         idx = self.timestamp.index(key)
         del self.timestamp[idx]
         self.timestamp.append(key)
-        

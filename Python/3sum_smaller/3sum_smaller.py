@@ -4,7 +4,7 @@ class Solution(object):
     def threeSumSmaller(self, nums, target):
         if len(nums) < 3:
             return 0
-            
+
         nums.sort()
         count = 0
         i = 0
@@ -21,4 +21,3 @@ class Solution(object):
                 j += 1
             i += 1
         return count
-        

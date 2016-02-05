@@ -12,4 +12,3 @@ class Solution(object):
                 not self.canWin(s[:idx] + '--' + s[idx+2:])
             idx += 1
         return can_win
-        
